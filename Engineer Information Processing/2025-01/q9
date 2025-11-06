@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+typedef struct student {
+    char* name;   // 학생 이름(문자열 포인터)
+    int score[3]; // 점수 3개(정수형)
+} Student;
+
+// 비트 마스크 디코딩: enc & 0xA5 (1010 0101b)
+int dec(int enc) {
+    return enc & 0xA5;
+}
+
+// 학생 한 명의 디코딩된 점수 합
+int sum(Student* p) {
+    // 각 점수에 dec 적용 후 합산
+    return dec(p->score[0]) + dec(p->score[1]) + dec(p->score[2]);
+}
+
+int main() {
+    // 두 명의 학생 초기화
+    // Kim: {0xA0, 0xA5, 0xDB}, Lee: {0xA0, 0xED, 0x81}
+    Student s[2] = {
+        "Kim", {0xA0, 0xA5, 0xDB},
+        "Lee", {0xA0, 0xED, 0x81}
+    };
+
+    int result = 0;
+
+    // 두 학생의 디코딩 합을 누적
+    for (int i = 0; i < 2; i++) {
+        result += sum(&s[i]);
+    }
+
+    // 최종 합 출력(정답: 908)
+    printf("%d", result);
+    return 0;
+}
+// 출력: 908

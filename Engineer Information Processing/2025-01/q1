@@ -1,0 +1,26 @@
+public class Main {
+  public static void main(String[] args) {
+
+    int a = 5, b = 0;
+
+    try {
+      System.out.print(a / b);   // ❌ 0으로 나누기 → ArithmeticException 발생
+    } 
+    catch (ArithmeticException e) {
+      System.out.print("출력1");  // 해당 예외에 해당 → 이 블록 실행
+    } 
+    catch (ArrayIndexOutOfBoundsException e) {
+      System.out.print("출력2");  // 실행 안 됨
+    } 
+    catch (NumberFormatException e) {
+      System.out.print("출력3");  // 실행 안 됨
+    } 
+    catch (Exception e) {
+      System.out.print("출력4");  // 실행 안 됨 (이미 위에서 처리됨)
+    } 
+    finally {
+      System.out.print("출력5");  // ✅ 항상 실행됨
+    }
+  }
+}
+// 예상 출력: 출력1출력5

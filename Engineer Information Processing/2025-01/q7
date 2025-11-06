@@ -1,0 +1,47 @@
+class Node:
+    def __init__(self, value):
+        self.value = value      # 노드 값
+        self.children = []      # 자식 노드 리스트 (왼쪽, 오른쪽)
+
+# 리스트로부터 트리 구조 생성
+def tree(li):
+    nodes = [Node(i) for i in li]             # 모든 값을 Node 객체로 만듦
+    for i in range(1, len(li)):
+        # (i - 1)//2 인덱스가 부모 노드의 위치 (완전이진트리 구조)
+        nodes[(i - 1) // 2].children.append(nodes[i])
+    return nodes[0]                           # 루트 노드 반환
+
+# 트리 순회하면서 홀수 레벨(1, 3, 5, ...) 노드 값의 합 계산
+def calc(node, level=0):
+    if node is None:
+        return 0
+    # 현재 레벨이 홀수면 node.value 더함, 짝수면 0
+    # 다음 자식들은 level+1로 재귀 호출
+    return (node.value if level % 2 == 1 else 0) + \
+           sum(calc(n, level + 1) for n in node.children)
+
+
+# 트리 데이터
+li = [3, 5, 8, 12, 15, 18, 21]
+root = tree(li)
+
+print(calc(root))
+
+; 레벨 0:         3
+;               /   \
+; 레벨 1:      5     8
+;             / \   / \
+; 레벨 2:   12 15 18 21
+
+; | 노드 | 레벨 | 홀수? | 더해짐? | 누적합 |
+; | -- | -- | --- | ---- | --- |
+; | 3  | 0  | ❌   | 0    | 0   |
+; | 5  | 1  | ✅   | +5   | 5   |
+; | 8  | 1  | ✅   | +8   | 13  |
+; | 12 | 2  | ❌   | +0   | 13  |
+; | 15 | 2  | ❌   | +0   | 13  |
+; | 18 | 2  | ❌   | +0   | 13  |
+; | 21 | 2  | ❌   | +0   | 13  |
+
+
+# 예상 출력: 13

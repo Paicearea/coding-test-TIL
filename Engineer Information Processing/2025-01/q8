@@ -1,0 +1,63 @@
+#include <stdio.h>   
+#include <stdlib.h>  
+ 
+typedef struct Data {
+    int value;
+    struct Data *next;
+} Data;
+ 
+// 새 노드를 맨 앞(head)에 삽입하는 함수
+Data* insert(Data* head, int value) {
+    Data* new_node = (Data*)malloc(sizeof(Data));
+    new_node->value = value;
+    new_node->next = head; // 기존 head를 뒤로
+    return new_node;       // 새 head 반환
+}
+
+// 특정 값(value)을 가진 노드를 찾아 리스트 맨 앞으로 이동
+Data* reconnect(Data* head, int value) {
+    // 빈 리스트거나 head가 이미 value라면 그대로 반환
+    if (head == NULL || head->value == value) return head;
+
+    Data *prev = NULL, *curr = head;
+    
+    // value를 가진 노드를 찾을 때까지 순회
+    while (curr != NULL && curr->value != value) {
+        prev = curr;
+        curr = curr->next;
+    }
+
+    // 찾았다면(curr != NULL) 이전(prev)과 연결 관계 재조정
+    if (curr != NULL && prev != NULL) {
+        prev->next = curr->next; // curr을 리스트에서 제거
+        curr->next = head;       // curr을 기존 head 앞에 붙임
+        head = curr;             // curr을 새 head로 갱신
+    }
+    return head;
+}
+ 
+int main() {
+    Data *head = NULL, *curr;
+
+    // 1~5를 순서대로 삽입
+    // insert는 앞쪽에 삽입하므로 결과는 역순
+    for (int i = 1; i <= 5; i++)
+        head = insert(head, i);
+
+    // 현재 리스트: 5 → 4 → 3 → 2 → 1
+    head = reconnect(head, 3); // 값 3을 가진 노드를 앞으로 이동
+
+    // 연결 리스트 출력
+    for (curr = head; curr != NULL; curr = curr->next)
+        printf("%d", curr->value);
+
+    return 0; 
+}
+
+; | 단계           | 동작          | 리스트 상태            |
+; | ------------ | ----------- | ----------------- |
+; | 초기 삽입        | insert 1~5  | 5 → 4 → 3 → 2 → 1 |
+; | reconnect(3) | 3을 맨 앞으로 이동 | 3 → 5 → 4 → 2 → 1 |
+; | 출력           | 순회하며 출력     | 35421         |
+
+// 출력: 35421

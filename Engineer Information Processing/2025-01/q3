@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void set(int** arr, int* data, int rows, int cols) {
+    // data[0] ~ data[rows*cols-1]를 arr에 채우는데,
+    // 인덱스를 (i+1)로 한 칸 밀어 원형처럼 배치:
+    //   행 = ((i + 1) / rows) % rows
+    //   열 = (i + 1) % cols
+    for (int i = 0; i < rows * cols; ++i) {
+        arr[((i + 1) / rows) % rows][(i + 1) % cols] = data[i];
+    }
+}
+
+int main() {
+    int rows = 3, cols = 3, sum = 0;
+    int data[] = {5, 2, 7, 4, 1, 8, 3, 6, 9}; 
+
+    int** arr;
+    arr = (int**) malloc(sizeof(int*) * rows);   // 행 수만큼 포인터 배열 할당
+    for (int i = 0; i < cols; i++) {             // ⚠ rows가 맞지만, 여기선 cols=rows라 문제 없음
+        arr[i] = (int*) malloc(sizeof(int) * cols); // 각 행에 열 수만큼 int 할당
+    }
+
+    // data를 규칙에 따라 arr에 채움
+    set(arr, data, rows, cols);
+
+    // 합 계산:
+    // i를 0~8까지 돌며,
+    //   위치 = (행 = i/rows, 열 = i%cols)  (행 우선 순회)
+    //   부호 = i가 짝수면 +, 홀수면 -
+    for (int i = 0; i < rows * cols; i++) {
+        sum += arr[i / rows][i % cols] * (i % 2 == 0 ? 1 : -1);
+    }
+
+    // 메모리 해제
+    for (int i = 0; i < rows; i++) {
+        free(arr[i]);
+    }
+    free(arr);
+
+    printf("%d", sum);
+}
+
+// 최종 행렬
+// [ [9, 5, 2],
+// [7, 4, 1],
+// [8, 3, 6] ]
+// +9 -5 +2 -7 +4 -1 +8 -3 +6 = 13
+
+// 예상 출력: 13
