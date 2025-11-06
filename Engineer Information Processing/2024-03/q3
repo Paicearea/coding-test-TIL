@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int func(){
+  // static 변수 x는 함수 최초 1회만 0으로 초기화되고,
+  // 이후 호출 간에 값이 유지됩니다.
+  static int x = 0; 
+  x += 2;           // 호출할 때마다 2씩 증가
+  return x;         // 현재 x 반환
+}
+
+int main(){
+  int x = 1;   // main의 지역 변수 x (func의 static x와는 별개)
+  int sum = 0;
+
+  // i = 0,1,2,3 총 4번 반복
+  for (int i = 0; i < 4; i++) {
+    x++;            // main의 x만 1씩 증가 (합계엔 영향 없음)
+    sum += func();  // func() 반환값 누적
+    /*
+      func() 호출별 static x 변화:
+        1번째 호출: x = 0 → 2  → 반환 2
+        2번째 호출: x = 2 → 4  → 반환 4
+        3번째 호출: x = 4 → 6  → 반환 6
+        4번째 호출: x = 6 → 8  → 반환 8
+      합계 sum = 2 + 4 + 6 + 8 = 20
+    */
+  }
+
+  printf("%d", sum); // 최종: 20
+  return 0;
+}

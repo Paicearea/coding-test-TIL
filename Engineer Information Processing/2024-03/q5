@@ -1,0 +1,56 @@
+public class Main {
+  public static void main(String[] args) {
+    Base a = new Derivate();     // 부모 타입 참조, 실제 객체는 자식
+    Derivate b = new Derivate(); // 자식 타입 참조, 자식 객체
+
+    /*
+      출력식 분석:
+      a.getX() → Derivate의 getX() 호출 (동적 바인딩)
+      a.x      → Base의 x 사용 (정적 바인딩)
+      b.getX() → Derivate의 getX() 호출
+      b.x      → Derivate의 x 사용
+    */
+
+    System.out.print(a.getX() + a.x + b.getX() + b.x);
+
+    /*
+      [계산 과정]
+
+      1️⃣ a.getX()
+         → Derivate.getX() 실행
+         → Derivate의 x = 7
+         → 7 * 3 = 21
+
+      2️⃣ a.x
+         → a의 타입은 Base이므로 Base.x 사용
+         → Base.x = 3
+
+      3️⃣ b.getX()
+         → Derivate.getX() 실행
+         → Derivate의 x = 7
+         → 7 * 3 = 21
+
+      4️⃣ b.x
+         → Derivate.x = 7
+
+      [총합]
+         21 + 3 + 21 + 7 = 52
+    */
+  }
+}
+
+class Base {
+  int x = 3; // 부모 클래스의 인스턴스 변수
+
+  int getX() {
+    return x * 2; // Base.x * 2
+  }
+}
+
+class Derivate extends Base {
+  int x = 7; // Base의 x를 "숨김" (오버라이딩 아님)
+
+  int getX() {
+    return x * 3; // Derivate.x * 3
+  }
+}

@@ -1,0 +1,46 @@
+class Main {
+
+  public static class Collection<T>{
+    T value;
+
+    public Collection(T t){
+      value = t;
+    }
+
+    public void print(){
+      /*
+        여기서 value의 정적 타입은 T.
+        T는 제한 없는(type bound 없는) 제네릭이므로 컴파일 시점에는 Object로만 취급됨.
+        오버로딩 해석(정적 바인딩)은 컴파일 타임 타입으로 결정:
+          - Printer.print(Integer)   ← T가 Integer임을 보장 못함 → 후보 제외
+          - Printer.print(Number)    ← T가 Number임을 보장 못함 → 후보 제외
+          - Printer.print(Object)    ← 항상 가능 → 이 메서드가 선택됨
+        따라서 new Printer().print(value); 는 print(Object a) 를 호출한다.
+      */
+      new Printer().print(value);
+    }
+
+    class Printer{
+      void print(Integer a){
+        System.out.print("A" + a);
+      }
+      void print(Object a){
+        System.out.print("B" + a);
+      }
+      void print(Number a){
+        System.out.print("C" + a);
+      }
+    }
+  }
+
+  public static void main(String[] args) {
+    /*
+      new Collection<>(0) 에서 0은 오토박싱되어 Integer.
+      하지만 위에서 설명했듯 오버로딩은 컴파일 타임에 결정되고,
+      value의 정적 타입은 T(→ Object로 간주) 이므로 print(Object) 호출.
+
+      최종 출력: "B0"
+    */
+    new Collection<>(0).print();
+  }
+}

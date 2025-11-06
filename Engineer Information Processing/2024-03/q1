@@ -1,0 +1,59 @@
+public class Main {
+  static String[] s = new String[3]; // 문자열 배열 (크기 3)
+
+  static void func(String[] s, int size) {
+    // [1] 인접한 문자열을 비교하면서 "O" 또는 "N" 출력
+    for (int i = 1; i < size; i++) {
+      // equals()는 문자열의 "내용"을 비교 (주소 비교 아님)
+      if (s[i - 1].equals(s[i])) {
+        System.out.print("O"); // 내용이 같으면 O
+      } else {
+        System.out.print("N"); // 다르면 N
+      }
+    }
+
+    // [2] 배열 전체 문자열을 이어서 출력
+    for (String m : s) {
+      System.out.print(m);
+    }
+  }
+
+  public static void main(String[] args) {
+    /*
+      [문제 풀이 요약]
+
+      s[0] = "A";
+      s[1] = "A";
+      s[2] = new String("A");
+
+      → s[0], s[1]은 모두 같은 "리터럴 상수 풀"을 참조.
+      → s[2]는 new String()으로 생성되었으므로 별도의 객체.
+
+      하지만, equals()는 "문자열 내용"을 비교하므로
+      s[0].equals(s[1]) → true
+      s[1].equals(s[2]) → true
+    */
+
+    s[0] = "A";             // 문자열 리터럴 (상수 풀)
+    s[1] = "A";             // 같은 리터럴 (상수 풀 공유)
+    s[2] = new String("A"); // heap 영역의 새로운 객체
+
+    func(s, 3);
+
+    /*
+      [실행 과정]
+
+      ① 첫 번째 for문
+         i=1 → s[0].equals(s[1]) → "A".equals("A") → true → "O"
+         i=2 → s[1].equals(s[2]) → "A".equals("A") → true → "O"
+         → 출력: OO
+
+      ② 두 번째 for문
+         s 배열 전체 출력 → "A" "A" "A"
+         → 출력: AAA
+
+      [최종 출력]
+      OOAAA
+    */
+  }
+}

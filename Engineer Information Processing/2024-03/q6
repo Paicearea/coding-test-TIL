@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+// 노드 구조체 정의
+struct Node {
+  int value;           // 데이터 값
+  struct Node* next;   // 다음 노드를 가리키는 포인터
+};
+
+// 인접한 두 노드씩 값을 교환하는 함수
+void func(struct Node* node) {
+  while (node != NULL && node->next != NULL) {
+    int t = node->value;             // 현재 노드 값 임시 저장
+    node->value = node->next->value; // 현재 노드 값 ↔ 다음 노드 값 교환
+    node->next->value = t;
+    node = node->next->next;         // 두 칸 이동 (다음 쌍으로)
+  }
+}
+
+int main() {
+  struct Node n1 = {1, NULL};
+  struct Node n2 = {2, NULL};
+  struct Node n3 = {3, NULL};
+
+  // 연결 구조 설정
+  n1.next = &n3; // n1 → n3
+  n3.next = &n2; // n3 → n2
+  // 최종 연결 순서: n1 → n3 → n2 → NULL
+
+  func(&n1); // 노드 값 교환 함수 호출
+
+  /*
+     func 실행 시 단계별 상태
+
+     [초기 연결]
+     n1(1) → n3(3) → n2(2)
+
+     첫 번째 while 반복:
+       node = n1(1)
+       node->next = n3(3)
+       → swap(1,3)
+       결과: n1(3), n3(1), n2(2)
+       node = node->next->next → n1→n3→n2 중 n1→n3→n2.next = NULL → 종료
+  */
+
+  struct Node* current = &n1;
+
+  // 리스트 순회 출력
+  while (current != NULL) {
+    printf("%d", current->value);
+    current = current->next;
+  }
+
+  /*
+    [출력 순서]
+    n1.value = 3
+    n3.value = 1
+    n2.value = 2
+
+    → 출력 결과: 312
+  */
+
+  return 0;
+}

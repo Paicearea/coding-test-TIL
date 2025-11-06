@@ -1,0 +1,27 @@
+def func(value):
+    # 1️⃣ 정수형(int)일 때
+    if type(value) == type(100):   # int 비교
+        return 100
+
+    # 2️⃣ 문자열(str)일 때
+    elif type(value) == type(""):  # str 비교
+        return len(value)
+
+    # 3️⃣ 그 외 (float, tuple 등)
+    else:
+        return 20
+
+
+a = '100.0'     # 문자열(str)
+b = 100.0       # 실수(float)
+c = (100, 200)  # 튜플(tuple)
+
+# func(a)
+# → type(a) == str → len("100.0") = 5 → 반환 5
+# func(b)
+# → type(b) == float → else 문 → 반환 20
+# func(c)
+# → type(c) == tuple → else 문 → 반환 20
+
+print(func(a) + func(b) + func(c))
+# = 5 + 20 + 20 = 45
