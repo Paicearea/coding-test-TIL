@@ -1,0 +1,22 @@
+class Main {
+    public static void main(String[] args) {
+        // 문자열 선언
+        String str = "ITISTESTSTRING";
+
+        // 'T'를 기준으로 문자열 분리 (정규식 사용)
+        // split()은 연속된 구분자 사이의 빈 문자열을 제거할 수 있음
+        String[] result = str.split("T");
+
+        /*
+         실제 분리 결과:
+         result[0] = "I"
+         result[1] = "IS"
+         result[2] = "ES"
+         result[3] = "S"
+         result[4] = "RING"
+        */
+
+        // 네 번째 요소(인덱스 3)는 "S"
+        System.out.print(result[3]); // ✅ 출력: S
+    }
+}

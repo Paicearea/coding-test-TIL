@@ -1,0 +1,36 @@
+class Main {
+    public static void main(String[] args) {
+        // 각각 "새로운" int 배열 객체 생성
+        // 내용은 같아도, new를 쓸 때마다 다른 메모리 공간이 할당됨
+        int[] a = new int[]{1, 2, 3, 4};
+        int[] b = new int[]{1, 2, 3, 4};
+        int[] c = new int[]{1, 2, 3};
+
+        /*
+          [메모리 개념 요약]
+            a ─▶ [1,2,3,4]   (주소 X1)
+            b ─▶ [1,2,3,4]   (주소 X2)
+            c ─▶ [1,2,3]     (주소 X3)
+          각각 전혀 다른 배열 객체!
+        */
+
+        // 비교 1
+        check(a, b); // a==b ? (X1 == X2) → false → 출력 "N"
+        // 비교 2
+        check(a, c); // a==c ? (X1 == X3) → false → 출력 "N"
+        // 비교 3
+        check(b, c); // b==c ? (X2 == X3) → false → 출력 "N"
+    }
+
+    public static void check(int[] a, int[] b) {
+        if (a == b) {
+            // 배열은 참조 타입이므로, == 은 "주소" 비교입니다.
+            // 동일한 배열을 가리키면 true, 그렇지 않으면 false
+            System.out.print("O");
+        } else {
+            System.out.print("N");
+        }
+    }
+}
+
+// 출력: NNN

@@ -1,0 +1,44 @@
+def fnCalculation(x, y):
+    result = 0
+    # 문자열 x를 한 칸씩 이동하며 y와 같은 부분 문자열이 몇 번 나오는지 확인
+    for i in range(len(x)):
+        temp = x[i:i+len(y)]   # 길이가 len(y)인 부분 문자열 추출
+        if temp == y:
+            result += 1        # 일치하면 카운트 증가
+    return result
+
+
+a = "abdcabcabca"
+p1 = "ab"
+p2 = "ca"
+
+# p1 = "ab" 가 a 안에서 몇 번 나오는지 확인
+# a = a b d c a b c a b c a
+#      ↑      ↑       ↑
+# 인덱스별 확인:
+# i=0 → "ab" ✅ (1)
+# i=1 → "bd"
+# i=2 → "dc"
+# i=3 → "ca"
+# i=4 → "ab" ✅ (2)
+# i=5 → "bc"
+# i=6 → "ca"
+# i=7 → "ab" ✅ (3)
+# i=8 → "bc"
+# i=9 → "ca"
+# 총 3회 등장 → fnCalculation(a,p1) = 3
+
+# p2 = "ca" 확인
+# a = a b d c a b c a b c a
+# i=0~2 불일치
+# i=3 → "ca" ✅ (1)
+# i=4~5 불일치
+# i=6 → "ca" ✅ (2)
+# i=7~8 불일치
+# i=9 → "ca" ✅ (3)
+# 총 3회 등장 → fnCalculation(a,p2) = 3
+
+out = f"ab{fnCalculation(a,p1)}ca{fnCalculation(a,p2)}"
+# out = "ab" + "3" + "ca" + "3" = "ab3ca3"
+
+print(out)

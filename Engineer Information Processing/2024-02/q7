@@ -1,0 +1,39 @@
+#include <stdio.h>
+ 
+// ⚙️ swap 함수: 두 변수 a, b의 값을 바꾸려는 의도
+void swap(int a, int b) {
+    int t = a;  // t ← a의 복사본 (값 전달)
+    a = b;      // a ← b의 값
+    b = t;      // b ← t의 값
+    // ⚠️ 하지만 이 함수는 "값에 의한 호출(call by value)"이므로
+    // main()의 a, b에는 아무 영향이 없음.
+}
+ 
+int main() {
+    int a = 11;
+    int b = 19;
+
+    swap(a, b);  
+    // 💡 swap은 a, b의 복사본만 바꿨기 때문에
+    // 실제 main의 a, b는 그대로 a=11, b=19
+
+    // 🔽 switch문 시작
+    switch(a) {
+        case 1:
+            b += 1;   // 실행 안 됨 (a는 11)
+        case 11:
+            b += 2;   // ✅ 실행됨 (a == 11)
+            // ⚠️ break 없음 → 바로 아래 default도 실행됨
+        default:
+            b += 3;   // ✅ 실행됨
+            break;    // 여기서 switch 종료
+    }
+
+    // case 11에서 b는 +2, default에서 b는 +3 → 총 +5 증가
+    // 따라서 b = 19 + 5 = 24
+
+    printf("%d", a - b);
+    // a - b = 11 - 24 = -13
+
+    return 0;
+}

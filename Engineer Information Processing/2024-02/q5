@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+// 문자열 복사 함수 (직접 구현한 strcpy)
+void sumFn(char* d, const char* s) {
+    while (*s) {   // s가 가리키는 문자가 '\0'이 아닐 때 반복
+        *d = *s;   // d에 s의 문자 복사
+        d++;       // 다음 위치로 이동
+        s++;       
+    }
+    *d = '\0';     // 마지막에 널 문자 추가 → 문자열 끝 표시
+}
+
+int main() {
+    const char* str1 = "first";   // 원본 문자열
+    char str2[50] = "teststring"; // 대상 버퍼 (충분히 큰 배열)
+    int result = 0;
+
+    sumFn(str2, str1); // str2 ← "first" 복사됨
+
+    /*
+      sumFn 실행 후:
+      str2 = "first"
+      (기존 "teststring" 내용은 완전히 덮어씀)
+    */
+
+    // str2 = "first"
+    // 인덱스별 문자: 0:'f', 1:'i', 2:'r', 3:'s', 4:'t'
+
+    for (int i = 0; str2[i] != '\0'; i++) {
+        result += i;
+    }
+    /*
+       i = 0 → result = 0
+       i = 1 → result = 0 + 1 = 1
+       i = 2 → result = 1 + 2 = 3
+       i = 3 → result = 3 + 3 = 6
+       i = 4 → result = 6 + 4 = 10
+       str2[5] == '\0' → 종료
+
+       최종 result = 10
+    */
+
+    printf("%d", result); // 출력: 10
+    return 0;
+}

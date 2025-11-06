@@ -1,0 +1,33 @@
+#include <stdio.h>
+ 
+// ✅ 구조체 정의
+// node는 정수 n1과 다음 노드를 가리키는 포인터 n2를 멤버로 가짐
+struct node {
+    int n1;            // 데이터 값
+    struct node *n2;   // 다음 노드를 가리키는 포인터 (자기 참조 구조체)
+};
+ 
+int main() {
+    // ✅ 구조체 변수 선언 및 초기화
+    struct node a = {10, NULL}; // n1=10, n2=NULL
+    struct node b = {20, NULL}; // n1=20, n2=NULL
+    struct node c = {30, NULL}; // n1=30, n2=NULL
+
+    // ✅ head 포인터가 첫 번째 노드 a를 가리킴
+    struct node *head = &a;
+
+    // ✅ 노드 연결
+    a.n2 = &b;  // a → b
+    b.n2 = &c;  // b → c
+    // 현재 연결 상태:
+    // head → a(10) → b(20) → c(30) → NULL
+
+    // ✅ head->n2->n1 의미:
+    // head      : a의 주소
+    // head->n2  : a.n2 → b의 주소
+    // head->n2->n1 : b의 n1 값 → 20
+
+    printf("%d\n", head->n2->n1); // 20 출력
+
+    return 0;
+}

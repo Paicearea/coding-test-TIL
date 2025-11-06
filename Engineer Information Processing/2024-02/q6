@@ -1,0 +1,40 @@
+class Main {
+    public static void main(String[] args) {
+        // 입력 문자열
+        String str = "abacabcd";
+
+        // 아스키(0~255) 문자 등장 여부 체크용 배열 (기본값: false)
+        boolean[] seen = new boolean[256];
+
+        // 문자열의 마지막 인덱스부터 재귀적으로 처리
+        System.out.print(calculFn(str, str.length() - 1, seen)); // 출력: dcba
+    }
+
+    /**
+     * 문자열을 뒤에서 앞으로(index 감소) 탐색하면서
+     * 오른쪽에서 "처음 등장하는 문자"만 결과 문자열 앞에 붙여 누적한다.
+     *
+     * 예) "abacabcd"
+     *  - 오른쪽부터 보면: d, c, b, a 가 처음 등장 → 누적 순서: d → dc → dcb → dcba
+     */
+    public static String calculFn(String str, int index, boolean[] seen) {
+        // 1) 종료 조건(base case): 왼쪽 끝을 지나면 빈 문자열 반환
+        if (index < 0) return "";
+
+        // 2) 현재 인덱스의 문자
+        char c = str.charAt(index);
+
+        // 3) 더 왼쪽 부분을 먼저 모두 처리(재귀 하강)
+        String result = calculFn(str, index - 1, seen);
+
+        // 4) 현재 문자가 처음 등장이라면 체크하고 결과 "앞"에 붙인다.
+        //    여기서 '앞'에 붙이는 c + result 로 인해 최종 결과가 dcba가 된다.
+        if (!seen[c]) {
+            seen[c] = true;
+            return c + result; // ← 핵심: 앞에 붙이기
+        }
+
+        // 5) 이미 나온 문자는 건너뛰고 누적 결과만 반환
+        return result;
+    }
+}
