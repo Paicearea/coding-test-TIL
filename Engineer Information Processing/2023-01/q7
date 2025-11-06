@@ -1,0 +1,72 @@
+// ✅ 추상 클래스: 직접 객체 생성 불가, 반드시 상속받아 사용해야 함
+abstract class Vehicle {
+
+    String name;  // 차량 이름을 저장하는 멤버 변수
+
+    // ✅ 추상 메서드: 반드시 자식 클래스에서 구현해야 함
+    abstract public String getName(String val);
+
+    // ✅ 일반 메서드: 이름 반환
+    public String getName() {
+        return "Vehicle name: " + name;
+    }
+}
+
+// ✅ Car 클래스가 Vehicle을 상속받음
+class Car extends Vehicle {
+
+    // 생성자: 매개변수로 받은 val을 부모의 name에도 할당
+    public Car(String val) {
+        name = super.name = val;  
+        // super.name = val → Vehicle 클래스의 name에 val 저장
+        // name = val → Car가 상속받은 동일 name에도 저장 (결국 같은 변수)
+    }
+
+    // ✅ 추상 메서드 오버라이딩 (필수 구현)
+    public String getName(String val) {
+        return "Car name:" + val;
+    }
+
+    // ✅ 메서드 오버로딩 (byte 배열 버전 추가)
+    public String getName(byte val[]) {
+        return "Car name:" + val;
+    }
+}
+
+// ✅ Main 클래스
+public class Main {
+
+    public static void main(String[] args) {
+
+        // 부모 타입(Vehicle)으로 자식 객체(Car)를 참조
+        Vehicle obj = new Car("Spark");
+
+        // 호출되는 메서드: obj.getName()
+        // Car 클래스에는 매개변수가 없는 getName()이 없음 → 부모(Vehicle)의 getName() 호출
+        // 따라서 Vehicle 클래스의 일반 메서드 실행됨
+        System.out.println(obj.getName());
+        // 출력: Vehicle name: Spark
+    }
+}
+
+/*
+==============================
+🔍 실행 순서 요약
+==============================
+
+1️⃣ new Car("Spark") 호출
+    → Car 생성자 실행 → super.name = "Spark"
+    → Vehicle 클래스의 name = "Spark"
+
+2️⃣ obj.getName() 호출
+    → obj 타입은 Vehicle
+    → Car에는 인자 없는 getName() 없음 → Vehicle의 getName() 실행
+
+3️⃣ Vehicle.getName() 내부
+    return "Vehicle name: " + name;
+    → name = "Spark"
+
+4️⃣ 최종 출력
+    Vehicle name: Spark
+*/
+

@@ -1,0 +1,41 @@
+class Parent {
+    int x = 100; // ✅ 부모 클래스의 멤버 변수 (초기값 100)
+
+    // ✅ Parent() 기본 생성자
+    Parent() {
+        this(500); // 같은 클래스의 다른 생성자 Parent(int x) 호출
+    }
+
+    // ✅ Parent(int x) 생성자
+    Parent(int x) {
+        this.x = x; // 부모의 x에 전달된 값 저장 → x = 500
+    }
+
+    int getX() {
+        return x; // 부모 클래스의 x 값 반환
+    }
+}
+
+class Child extends Parent {
+    int x = 4000; // ✅ 자식 클래스의 멤버 변수 (부모의 x와는 별개로 존재)
+
+    // ✅ Child() 기본 생성자
+    Child() {
+        this(5000); // 같은 클래스의 다른 생성자 Child(int x) 호출
+    }
+
+    // ✅ Child(int x) 생성자
+    Child(int x) {
+        this.x = x; // 자식 클래스의 x에 전달된 값 저장 → x = 5000
+        // super() 호출이 생략되어 있음 → 자동으로 Parent() 호출됨
+        // → Parent() 내부에서 this(500) 실행 → 부모의 x = 500 설정
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Child obj = new Child(); // ✅ Child() 호출 → Child(int 5000) → Parent() → Parent(int 500)
+        System.out.println(obj.getX());
+        // getX()는 Parent 클래스의 메서드이므로, 부모의 x 값(500)을 반환함.
+    }
+}
