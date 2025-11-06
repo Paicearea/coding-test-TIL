@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+/*
+  ▶ 핵심 요점
+  - 전역 배열 n[30]은 "하나"뿐이다.
+  - test()는 매번 같은 n의 주소를 반환한다.
+  - 따라서 test1/test2/test3는 전부 "같은 곳"을 가리킨다.
+  - 세 번째 입력(박영희) 때 n이 마지막으로 덮어써지므로
+    세 번 출력 모두 "박영희"가 된다.
+*/
+
+char n[30];  // 전역 버퍼: 한 개뿐이라 마지막 입력으로 항상 덮어써짐
+
+// 개행('\n') 제거 유틸(출력 깔끔하게)
+static void chomp(char *s){
+    size_t len = strlen(s);
+    if (len && s[len-1] == '\n') s[len-1] = '\0';
+}
+
+char *test(void) {
+    printf("입력하세요 : ");
+    /* gets는 위험하므로 fgets를 사용해도 '같은 버퍼 n'에 읽는 점은 동일 */
+    if (fgets(n, sizeof(n), stdin) == NULL) return n;
+    chomp(n);
+    return n;  // ★ 항상 같은 전역 버퍼 n의 주소를 반환
+}
+
+int main(void)
+{
+    char *test1;
+    char *test2;
+    char *test3;
+
+    /* 입력: 홍길동, 김철수, 박영희 (이 순서대로) */
+    test1 = test();  // → n = "홍길동", test1 -> n
+    test2 = test();  // → n = "김철수", test2 -> n (test1도 여전히 n을 가리킴!)
+    test3 = test();  // → n = "박영희", test3 -> n (test1/2/3 모두 같은 n)
+
+    /*
+      이 시점의 메모리 상태
+      n  : "박영희"
+      test1 -> n
+      test2 -> n
+      test3 -> n
+      → 결국 printf는 모두 같은 문자열을 본다: "박영희"
+    */
+
+    printf("%s\n\n", test1);  // 박영희
+    printf("%s\n\n", test2);  // 박영희
+    printf("%s\n",  test3);   // 박영희
+
+    return 0;
+}

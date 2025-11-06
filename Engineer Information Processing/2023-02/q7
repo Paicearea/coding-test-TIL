@@ -1,0 +1,21 @@
+public class Main {
+    public static void main(String[] args) {
+        
+        // 문자열은 반드시 "큰따옴표"로 작성해야 함
+        String str1 = "Programming";
+        String str2 = "Programming";
+        String str3 = new String("Programming");
+
+        // 1️⃣ == : 객체의 "주소값"을 비교
+        System.out.println(str1 == str2);  // true (같은 리터럴, 같은 상수 풀 참조)
+        
+        // 2️⃣ == : str3은 new로 새 객체 생성 → 다른 주소
+        System.out.println(str1 == str3);  // false
+        
+        // 3️⃣ equals(): 문자열의 "내용" 비교
+        System.out.println(str1.equals(str3)); // true
+        
+        // 4️⃣ 마지막 출력 (줄바꿈 없이)
+        System.out.print(str2.equals(str3));   // true
+    }
+}

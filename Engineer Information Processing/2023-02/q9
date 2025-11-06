@@ -1,0 +1,22 @@
+# 원본문자열
+a = "engineer information processing"
+
+# 인덱스 참고(0부터 시작):
+#  a =  e (0) n (1) g (2) i (3) n (4) e (5) e (6) r (7)  (8)
+#       i (9) n (10) f (11) o (12) r (13) m (14) a (15) t (16) i (17) o (18) n (19)  (20)
+#       p (21) r (22) o (23) c (24) e (25) s (26) s (27) i (28) n (29) g (30)
+
+# b = a[:3]  → 0~2까지 'eng'
+b = a[:3]      # 'eng'
+
+# c = a[4:6] → 4,5번 문자 'n','e' → 'ne'
+c = a[4:6]     # 'ne'
+
+# d = a[28:]  → 28부터 끝까지 'i','n','g' → 'ing'
+d = a[28:]     # 'ing'
+
+# e = b + c + d
+#   = 'eng' + 'ne' + 'ing' → 'engneing'
+e = b + c + d
+
+print(e)       # 출력: engneing

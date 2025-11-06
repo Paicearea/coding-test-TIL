@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+void main() {
+    int n[3] = {73, 95, 82};  // 세 과목 점수
+    int sum = 0;
+
+    // 1) 합계 구하기
+    //    i=0: sum += 73  →  73
+    //    i=1: sum += 95  → 168
+    //    i=2: sum += 82  → 250
+    for (int i = 0; i < 3; i++) {
+        sum += n[i];
+    }
+    // 합계 sum = 250
+
+    // 2) 분기 기준값 계산
+    //    sum / 30  →  250 / 30 = 8 (정수 나눗셈)
+    //    따라서 switch(8)로 분기
+    switch (sum / 30) {
+        case 10:
+        case 9:
+            // sum/30이 9나 10이 아니므로 여기엔 들어오지 않음
+            printf("A");   // (실행 안 됨, 그리고 break도 없어 아래로 떨어질 수 있음)
+        case 8:
+            // ✅ sum/30 == 8 이므로 여기부터 실행 시작
+            printf("B");   // 첫 출력: 'B'
+            // ⚠ break가 없으므로 아래 case로 "떨어짐"(fall-through)
+        case 7:
+        case 6:
+            // 8에서 떨어져 계속 실행됨
+            printf("C");   // 두 번째 출력: 'C'
+            // ⚠ break가 없으므로 default로 계속 진행
+        default:
+            // 마지막으로 default도 실행
+            printf("D");   // 세 번째 출력: 'D'
+    }
+
+    // 3) 총 출력 흐름 요약
+    //    case 8 진입 → "B"
+    //      ↓ (fall-through)
+    //    case 7/6   → "C"
+    //      ↓ (fall-through)
+    //    default    → "D"
+    //
+    // => 최종 출력: B C D  → "BCD"
+
+    // 보기 좋게 줄바꿈 (선택)
+    printf("\n");
+}

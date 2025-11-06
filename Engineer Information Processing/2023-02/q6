@@ -1,0 +1,89 @@
+#include <stdio.h>
+#define MAX_SIZE 10
+
+int isWhat[MAX_SIZE];  // 스택 배열
+int point = -1;        // 스택의 top 위치 (초기에는 비어 있음)
+
+int isEmpty() {
+    if (point == -1) return 1;  // 스택이 비어 있으면 1
+    return 0;
+}
+
+int isFull() {
+    if (point == 10) return 1;
+    return 0;
+}
+
+void into(int num) { // push 역할
+    if (point >= 10) 
+        printf("Full");         // 스택이 꽉 찼을 때
+    else 
+        isWhat[++point] = num;  // 스택 top 하나 증가 후 값 저장
+}
+
+int take() { // pop 역할
+    if (isEmpty() == 1) 
+        printf("Empty");        // 스택이 비었을 때
+    else 
+        return isWhat[point--]; // 현재 top의 값 반환 후 top 감소
+    return 0;
+}
+
+int main(int argc, char const *argv[]){
+    int e;
+    
+    // 1️⃣ 초기 상태
+    // point = -1
+    // 스택 []
+
+    into(5); // push 5 → [5]
+    into(2); // push 2 → [5,2]   (top=1)
+
+    // point = 1
+    // isWhat = [5,2]
+
+    // 2️⃣ while문 시작
+    while (!isEmpty()) { // 비어있지 않으므로 반복
+
+        printf("%d", take());
+        // take() → pop top → 2 출력
+        // stack = [5]
+        // 출력: "2"
+
+        into(4); // push 4 → [5,4]
+        into(1); // push 1 → [5,4,1]
+
+        printf("%d", take());
+        // pop → 1 출력
+        // stack = [5,4]
+        // 출력: "21"
+
+        into(3); // push 3 → [5,4,3]
+        printf("%d", take());
+        // pop → 3 출력
+        // stack = [5,4]
+        // 출력: "213"
+
+        printf("%d", take());
+        // pop → 4 출력
+        // stack = [5]
+        // 출력: "2134"
+
+        into(6); // push 6 → [5,6]
+
+        printf("%d", take());
+        // pop → 6 출력
+        // stack = [5]
+        // 출력: "21346"
+
+        printf("%d", take());
+        // pop → 5 출력
+        // stack = []
+        // 출력: "213465"
+    }
+
+    // 3️⃣ 스택이 비었으므로 while 탈출
+    // point = -1 → isEmpty() == 1 → 반복 종료
+
+    return 0;
+}
