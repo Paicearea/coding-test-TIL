@@ -1,0 +1,24 @@
+public class Main {
+    // change 메서드: 배열과 문자열을 매개변수로 받음
+    public static void change(String[] data, String s){
+        // data[0]의 값을 s로 변경 → data[0] = "B"
+        data[0] = s;
+
+        // s에 "Z"를 대입 → 이건 지역 변수 s만 바뀜 (main의 s는 영향 없음)
+        s = "Z";
+    }
+    
+    public static void main(String[] args) {
+        // 문자열 배열 data 선언 및 초기화
+        String data[] = { "A" }; // data[0] = "A"
+
+        // 문자열 변수 s 선언
+        String s = "B";
+        
+        // change 메서드 호출
+        change(data, s);
+
+        // data[0]은 "B"로 바뀌었고, s는 여전히 "B"
+        System.out.print(data[0] + s); // 출력: "BB"
+    }
+}

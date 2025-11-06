@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+struct dat {
+    int x;
+    int y;
+};
+
+int main() {
+    struct dat a[] = {{1, 2}, {3, 4}, {5, 6}};
+    // a[0] = {1,2}, a[1] = {3,4}, a[2] = {5,6}
+
+    struct dat* ptr = a;      // ptr은 a[0]을 가리킴
+    struct dat** pptr = &ptr; // pptr은 ptr의 주소를 가리킴
+
+    // (*pptr) == ptr == a
+    // (*pptr)[1] == a[1]
+    // (*pptr)[2] == a[2]
+
+    (*pptr)[1] = (*pptr)[2];  // 즉, a[1] = a[2];
+                              // a[1].x = 5, a[1].y = 6
+
+    printf("%d 그리고 %d", a[1].x, a[1].y);
+
+    return 0;
+}
+
+// 예상 출력: 5 그리고 6

@@ -1,0 +1,30 @@
+public class Main {
+ 
+    // 함수형 인터페이스: 정수 x를 받아 정수 반환, 예외 던질 수 있음
+    static interface F {
+        int apply(int x) throws Exception;
+    }
+ 
+    // run: F를 받아 x=3을 적용해보고, 예외가 나면 7을 반환
+    public static int run(F f) {
+        try {
+            return f.apply(3);   // x = 3 전달
+        } catch (Exception e) {
+            return 7;           // 예외 발생 시 7 반환
+        }
+    }
+ 
+    public static void main(String[] args) {
+        // 람다 f: x > 2이면 예외 던짐, 아니면 x*2 반환
+        F f = (x) -> {
+            if (x > 2) {
+                throw new Exception();
+            }
+            return x * 2;
+        };
+ 
+        // 첫 번째 run(f): x=3 → 3>2 이므로 예외 → catch에서 7 반환
+        // 두 번째 run((int n)->n+9): x=3 → 예외 없음 → 3+9=12 반환
+        System.out.print(run(f) + run((int n) -> n + 9)); // 7 + 12 = 19 출력
+    }
+}

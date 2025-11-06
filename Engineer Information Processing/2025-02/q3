@@ -1,0 +1,22 @@
+public class Main{
+
+    // 부모 클래스
+    public static class Parent {
+        public int x(int i) { return i + 2; }      // 인스턴스 메서드
+        public static String id() { return "P"; }  // 정적(static) 메서드
+    }
+
+    // 자식 클래스 (Parent 상속)
+    public static class Child extends Parent {
+        public int x(int i) { return i + 3; }      // 오버라이드됨 (동적 바인딩)
+        public String x(String s) { return s + "R"; } // 오버로딩
+        public static String id() { return "C"; }  // 정적 메서드는 오버라이드 아님 (숨김)
+    }
+
+    public static void main(String[] args) {
+        Parent ref = new Child();    // 부모 타입 참조, 자식 객체 생성
+        System.out.println(ref.x(2) + ref.id());
+    }
+}
+
+// 예상 출력: 5P

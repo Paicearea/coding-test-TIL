@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+ 
+struct node {
+    int p;
+    struct node* n;  // 다음 노드를 가리키는 포인터
+};
+ 
+int main() {
+    struct node a = {1, NULL};
+    struct node b = {2, NULL};
+    struct node c = {3, NULL};
+ 
+    // 첫 연결
+    a.n = &b;   // a → b
+    b.n = &c;   // b → c
+    c.n = NULL; // c → NULL  (현재 상태: a→b→c→NULL)
+
+    // 하지만 아래에서 모두 덮어씀!
+    c.n = &a;   // c → a (이제 순환 구조 시작)
+    a.n = &b;   // a → b  (같음)
+    b.n = NULL; // b → NULL (여기서 리스트가 끊김)
+
+    struct node* head = &c;  // head = c를 가리킴
+
+    printf("%d %d %d", head->p, head->n->p, head->n->n->p);
+    return 0;
+}
+
+// 예상 출력: 3 1 2

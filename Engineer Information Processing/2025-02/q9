@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    char c;
+    struct node* p; // 다음 노드를 가리키는 포인터 (여기서는 이전 문자 방향으로 연결됨)
+};
+
+struct node* func(char* s) {
+    struct node* h = NULL, *n;
+    
+    while (*s) {
+        n = malloc(sizeof(struct node)); // 새 노드 생성
+        n->c = *s++;                     // 문자열의 현재 문자 저장 후 다음으로 이동
+        n->p = h;                        // 새 노드가 이전 노드를 가리킴 (뒤로 연결)
+        h = n;                           // 헤드를 새 노드로 갱신
+    }
+    
+    return h; // 가장 마지막에 생성된 노드(문자열의 끝에서 첫 문자까지 역순)
+}
+
+int main() {
+    struct node* n = func("BEST");
+    
+    while (n) {
+        putchar(n->c);   // 문자 출력
+        struct node* t = n;
+        n = n->p;        // 다음 노드로 이동 (이전 문자 방향)
+        free(t);         // 메모리 해제
+    }
+    
+    return 0;
+}
+// 예상 출력: TSEB
