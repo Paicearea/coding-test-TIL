@@ -1,0 +1,76 @@
+public class main {
+    public static void main(String[] args) {
+
+        // ✅ A 타입의 참조변수로 B 객체 생성 (다형성)
+        A b = new B();
+
+        // ✅ b.paint() 호출
+        //   → 컴파일 시점: A.paint() 참조
+        //   → 실행 시점: 실제 객체는 B → B.paint() 실행 (동적 바인딩)
+        b.paint();
+
+        // ✅ b.draw() 호출
+        //   → 역시 실제 객체는 B → B.draw() 실행
+        b.draw();
+    }
+}
+
+// ✅ 부모 클래스
+class A {
+    public void paint() {
+        System.out.print("A");
+        draw(); 
+        // ⚠️ 오버라이딩된 메서드가 있으면 자식(B)의 draw()가 호출됨 (동적 바인딩)
+    }
+
+    public void draw() {
+        System.out.print("B");
+        draw(); // ⚠️ 재귀 호출 구조 (이 코드가 직접 실행되면 무한 루프)
+                 // 하지만 B 클래스가 오버라이딩하기 때문에 B.draw()가 대신 호출됨
+    }
+}
+
+// ✅ 자식 클래스 (A를 상속)
+class B extends A {
+    public void paint() {
+        // super.draw() → A.draw() 실행
+        //   A.draw() 내부에서 또 draw()를 호출 → 이때는 B.draw()가 실행됨
+        //   따라서 "B" (A.draw의 print) + "D" (B.draw의 print) 출력
+        super.draw(); // → 출력 "BD"
+
+        System.out.print("C"); // → "C" 추가 → "BDC"
+
+        // this.draw() → 자기 자신의 draw() → "D" 출력
+        this.draw(); // → "BDCD"
+    }
+
+    public void draw() {
+        System.out.print("D");
+    }
+}
+
+/*
+========================
+🔍 실행 전체 흐름 요약
+========================
+1️⃣ A b = new B();
+    → 실제 객체는 B
+
+2️⃣ b.paint();
+    → B.paint() 실행
+        - super.draw() → A.draw() 실행
+            - "B" 출력
+            - A.draw() 안의 draw()는 오버라이딩된 B.draw()로 연결 → "D" 출력
+            → 결과: "BD"
+        - System.out.print("C") → "BDC"
+        - this.draw() → B.draw() → "D" 출력
+        → paint() 전체 결과: "BDCD"
+
+3️⃣ b.draw();
+    → B.draw() 실행 → "D" 출력
+
+========================
+✅ 최종 출력 결과
+========================
+BDCDD
+*/

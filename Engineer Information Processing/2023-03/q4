@@ -1,0 +1,14 @@
+#include <stdio.h>   // <stdio.h> 빠져있던 부분 추가
+
+// ✅ 재귀 함수 f(n): n! 계산
+int f(int n) {
+    if (n <= 1) 
+        return 1;         // 0! 또는 1! = 1
+    else 
+        return n * f(n - 1);  // n * (n-1)!
+}
+
+int main() {
+    printf("%d", f(7));   // f(7) = 7! = 5040
+    return 0;
+}

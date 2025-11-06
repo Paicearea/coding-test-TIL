@@ -1,0 +1,27 @@
+class Person {
+    private String name;  // ✅ 인스턴스 변수 (객체마다 따로 존재)
+
+    public Person(String val) {
+        name = val;       // 생성자에서 name 초기화 ("Kim")
+    }
+
+    public static String get() {
+        return name;      // ❌ 오류 발생
+        // ⚠ static 메서드 안에서는 'name'을 사용할 수 없음
+        // 이유: name은 인스턴스 변수이기 때문 (static 영역에서는 접근 불가)
+    }
+
+    public void print() {
+        System.out.println(name); // ✅ 가능 (인스턴스 메서드이므로)
+    }
+}
+
+public class main {
+    public static void main(String[] args) {
+        Person obj = new Person("Kim"); // 객체 생성
+        obj.print();                    // "Kim" 출력
+    }
+}
+
+// 예상 출력: Kim
+// 오류 발생 코드줄: return name;

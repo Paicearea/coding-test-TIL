@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// 구조체 정의
+typedef struct Data {
+    char c;       // 문자형 변수 (현재 사용하지 않음)
+    int *numPtr;  // 정수를 가리키는 포인터
+} Data;
+
+int main() {
+    int num = 10;       // 정수 변수 num 선언 및 초기화
+
+    Data d1;            // 구조체 변수 d1 (스택에 생성)
+    Data *d2 = malloc(sizeof(Data)); // 구조체 포인터 d2 (힙에 메모리 할당)
+
+    // ⚙️ 구조체 멤버 접근 차이
+    // '.'  → 일반 구조체 변수에서 멤버 접근
+    // '->' → 구조체 포인터가 가리키는 대상의 멤버 접근
+
+    d1.numPtr = &num;   // d1의 numPtr이 num의 주소를 가리킴
+    d2->numPtr = &num;  // d2 포인터가 가리키는 구조체의 numPtr도 num 주소를 가리킴
+
+    /*
+       현재 상태:
+       ┌──────────────┐
+       │ num = 10     │
+       └──────┬───────┘
+              │
+       ┌──────┴───────┐
+       │ d1.numPtr    │──► num(10)
+       ├──────────────┤
+       │ d2->numPtr   │──► num(10)
+       └──────────────┘
+    */
+
+    // 두 포인터 모두 같은 주소(&num)를 참조하므로 출력값 동일
+    printf("%d\n", *d1.numPtr);   // numPtr이 가리키는 값 = 10
+    printf("%d\n", *d2->numPtr);  // numPtr이 가리키는 값 = 10
+
+    // 동적 할당된 메모리 해제
+    free(d2);
+
+    return 0;
+}
