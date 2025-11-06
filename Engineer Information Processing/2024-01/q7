@@ -1,0 +1,58 @@
+// ✅ 부모 클래스
+class classOne {
+    int a, b;
+
+    // 생성자: 매개변수 a, b로 초기화
+    public classOne(int a, int b) {
+        this.a = a;
+        this.b = b;
+    }
+
+    // print(): a+b 출력
+    public void print() {
+        System.out.println(a + b);
+    }
+}
+
+// ✅ 자식 클래스 (classOne 상속)
+class classTwo extends classOne {
+    int po = 3;
+
+    // 생성자: int i를 받아 부모 생성자 호출
+    public classTwo(int i) {
+        super(i, i + 1);   // 부모의 생성자 호출 (a=i, b=i+1)
+        // 즉, a = 10, b = 11 로 초기화
+    }
+
+    // print() 메서드 오버라이딩 (부모의 print() 재정의)
+    public void print() {
+        System.out.println(po * po); // 3 * 3 = 9 출력
+    }
+}
+
+// ✅ 실행 클래스
+public class main {
+    public static void main(String[] args) {
+        // 업캐스팅(Upcasting)
+        // classTwo(자식) 객체를 classOne(부모) 타입 참조 변수에 저장
+        classOne one = new classTwo(10);
+
+        /*
+            여기서 주의 ⚠️
+            - 변수 타입은 classOne (부모)
+            - 실제 객체는 classTwo (자식)
+            → 오버라이딩된 메서드는 실제 객체 기준으로 실행된다.
+              즉, 부모 타입으로 참조해도 자식의 print()가 호출됨.
+        */
+
+        one.print();  // classTwo의 print() 실행
+    }
+}
+
+; 단계	코드 위치	동작 내용
+; 1️⃣	main()	프로그램 시작
+; 2️⃣	new classTwo(10)	classTwo 객체 생성
+; 3️⃣	super(i, i+1)	부모 classOne 생성자 호출 → a=10, b=11
+; 4️⃣	classTwo 생성자 완료	po=3 유지
+; 5️⃣	one.print() 호출	오버라이딩된 classTwo의 print() 실행
+; 6️⃣	System.out.println(po*po)	3×3=9 출력

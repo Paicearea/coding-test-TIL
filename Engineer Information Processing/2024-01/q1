@@ -1,0 +1,56 @@
+// ✅ 싱글톤(Singleton) 클래스 예시
+class Connection {
+ 
+    // 🔹 클래스 내부에서 자기 자신의 인스턴스를 저장할 static 변수
+    private static Connection _inst = null;
+
+    // 🔹 카운트를 저장할 인스턴스 변수
+    private int count = 0;
+    
+    // ✅ get(): Connection 객체를 반환하는 정적 메서드
+    static public Connection get() {
+        // _inst가 아직 만들어지지 않았다면 새로 생성
+        if(_inst == null) {
+            _inst = new Connection();
+            return _inst;
+        }
+        // 이미 만들어진 게 있다면 그걸 그대로 반환
+        return _inst;
+    }
+    
+    // 🔹 count 값을 1 증가시키는 메서드
+    public void count() {
+         count++; 
+    }
+    
+    // 🔹 현재 count 값을 반환하는 메서드
+    public int getCount() {
+         return count; 
+    }
+}
+ 
+ 
+// ✅ 실행 클래스
+public class main {  
+ 
+    public static void main(String[] args) {
+
+        // 첫 번째 호출 → 아직 _inst == null → 새 객체 생성
+        Connection conn1 = Connection.get();
+        conn1.count(); // count = 1
+
+        // 두 번째 호출 → 이미 생성된 _inst 반환 (conn1과 같은 객체)
+        Connection conn2 = Connection.get();
+        conn2.count(); // count = 2 (같은 객체 공유 중)
+
+        // 세 번째 호출 → 여전히 같은 객체 반환
+        Connection conn3 = Connection.get();
+        conn3.count(); // count = 3
+
+        // conn1도 동일한 객체이므로 다시 호출 시 count = 4
+        conn1.count();
+
+        // 하나의 객체에서 count가 총 4번 증가했음
+        System.out.print(conn1.getCount()); // 4 출력
+    }
+}
