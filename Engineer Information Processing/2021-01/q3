@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+// ✅ 구조체 정의
+// 구조체 good은 이름(name)과 나이(age)를 저장함
+struct good {
+    char name[10];
+    int age;
+};
+
+void main() {
+    // ✅ 구조체 배열 초기화
+    // s[0] → {"Kim", 28}
+    // s[1] → {"Lee", 38}
+    // s[2] → {"Seo", 50}
+    // s[3] → {"Park", 35}
+    struct good s[] = {
+        {"Kim", 28},
+        {"Lee", 38},
+        {"Seo", 50},
+        {"Park", 35}
+    };
+
+    struct good *p;  // 구조체 포인터 p 선언
+    p = s;           // p는 배열 s의 첫 번째 요소(s[0])를 가리킴
+
+    /*
+       현재 상태:
+       p → s[0] ("Kim", 28)
+       p+1 → s[1] ("Lee", 38)
+       p+2 → s[2] ("Seo", 50)
+       p+3 → s[3] ("Park", 35)
+    */
+
+    p++; // 포인터를 1 증가 → 이제 p는 s[1] ("Lee", 38)를 가리킴
+
+    // p->name  → p가 가리키는 구조체의 name 멤버
+    // p->age   → p가 가리키는 구조체의 age 멤버
+    printf("%s\n", p->name);  // "Lee" 출력
+    printf("%d\n", p->age);   // 38 출력
+}

@@ -1,0 +1,18 @@
+class good:
+    # 클래스 변수 li — 지역 이름을 담은 리스트
+    li = ["seoul", "kyeonggi", "inchon", "daejeon", "daegu", "pusan"]
+
+# good 클래스의 인스턴스 g 생성
+g = good()
+
+# 결과를 저장할 문자열 변수 초기화
+str01 = ''
+
+# g.li 리스트를 순회하면서 각 문자열의 첫 글자만 추출
+for i in g.li:
+    # i는 순서대로 "seoul", "kyeonggi", "inchon", "daejeon", "daegu", "pusan"
+    # i[0]은 각각의 첫 글자 → 's', 'k', 'i', 'd', 'd', 'p'
+    str01 = str01 + i[0]   # 추출한 글자를 str01에 이어 붙임
+
+# 반복이 끝나면 str01은 'skiddp'가 됨
+print(str01)   # 최종 결과 출력

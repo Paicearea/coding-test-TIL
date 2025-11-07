@@ -1,0 +1,29 @@
+public class good {
+    public static void main(String[] args) {
+        int i, j;
+        
+        // 초기값: j=0, i=0
+        // 조건: i <= 5 → i가 5 이하일 때까지 반복
+        // i는 매번 1씩 증가
+        for (j = 0, i = 0; i <= 5; i++) {
+
+            // j += i → j = j + i
+            // i가 0부터 5까지 증가하면서 j에 더해짐 (누적 합)
+            j += i;
+
+            // i 값을 출력 (0,1,2,3,4,5)
+            System.out.print(i);
+
+            // i가 5일 때 '='과 합계 j를 출력
+            if (i == 5) {
+                System.out.print("=");
+                System.out.print(j);   // j는 0+1+2+3+4+5 = 15
+            } else {
+                // 그 외의 경우엔 '+'를 출력
+                System.out.print("+");
+            }
+        }
+    }
+}
+
+//예상 출력: 0+1+2+3+4+5=15
