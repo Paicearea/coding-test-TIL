@@ -1,0 +1,28 @@
+# ✅ 1️⃣ 초기 리스트 정의
+TestList = [1, 2, 3, 4, 5]
+# 현재 리스트 상태: [1, 2, 3, 4, 5]
+
+# ✅ 2️⃣ map() + lambda 사용
+# map(function, iterable) 함수는
+# iterable(여기서는 TestList)의 각 요소를 function에 넣고 결과를 반환하는 반복자(iterator)를 만든다.
+#
+# lambda num: num + 100 → 익명 함수 (각 num 값에 +100 수행)
+#
+# list(...) 로 map 결과를 리스트로 변환
+TestList = list(map(lambda num: num + 100, TestList))
+
+# ✅ 3️⃣ 내부 동작 과정
+# lambda 함수가 실행되는 과정:
+#   num = 1 → 1 + 100 = 101
+#   num = 2 → 2 + 100 = 102
+#   num = 3 → 3 + 100 = 103
+#   num = 4 → 4 + 100 = 104
+#   num = 5 → 5 + 100 = 105
+#
+# 따라서 새로운 리스트는 [101, 102, 103, 104, 105]
+
+# ✅ 4️⃣ 결과 출력
+print(TestList)  # 최종 결과 출력
+
+# ✅ 최종 출력값:
+# [101, 102, 103, 104, 105]

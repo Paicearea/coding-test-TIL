@@ -1,0 +1,54 @@
+public class Main {
+
+    // ✅ 1️⃣ 정적 메서드: 배열 생성 후 반환
+    static int[] MakeArray() {
+
+        int[] tempArr = new int[4]; // 길이 4짜리 정수 배열 생성
+        // 현재 tempArr = [0, 0, 0, 0]
+
+        // 배열의 각 요소에 인덱스 값을 저장
+        for (int i = 0; i < tempArr.length; i++) {
+            tempArr[i] = i; // 0,1,2,3 차례로 저장
+        }
+        // tempArr = [0, 1, 2, 3]
+
+        return tempArr; // 이 배열을 반환
+    }
+
+    public static void main(String[] args) {
+
+        int[] intArr;          // 배열 변수 선언
+        intArr = MakeArray();  // MakeArray() 호출 → [0,1,2,3] 반환받음
+
+        // ✅ 2️⃣ 배열 내용 출력
+        for (int i = 0; i < intArr.length; i++) {
+            System.out.print(intArr[i]); // 각 요소를 차례로 출력
+        }
+
+        /*
+        ===========================
+        🔍 실행 흐름 요약
+        ===========================
+        1. main() 실행
+        2. MakeArray() 호출
+           → int[] tempArr = new int[4]
+           → for문으로 i를 대입
+              i=0 → tempArr[0]=0
+              i=1 → tempArr[1]=1
+              i=2 → tempArr[2]=2
+              i=3 → tempArr[3]=3
+           → [0,1,2,3] 반환
+
+        3. main()에서 intArr이 [0,1,2,3]을 받음
+
+        4. for문 출력
+           intArr[0]=0
+           intArr[1]=1
+           intArr[2]=2
+           intArr[3]=3
+
+        ✅ 최종 출력: 0123
+        ===========================
+        */
+    }
+}
