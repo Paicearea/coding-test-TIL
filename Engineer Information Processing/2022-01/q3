@@ -1,0 +1,30 @@
+// Car 클래스가 Runnable 인터페이스를 구현함
+class Car implements Runnable {
+    int a;
+
+    // Runnable 인터페이스의 run() 메서드 구현
+    public void run() {
+        System.out.println("message");  // 스레드가 실행될 때 출력됨
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+
+        // Thread 생성 시, Runnable을 구현한 객체를 인자로 전달해야 함
+        Thread t1 = new Thread(new Car());  // ✅ 빈칸에는 'Car()'가 들어감
+
+        t1.start();  // 스레드 실행 -> 내부적으로 run() 메서드가 실행됨
+
+        /*
+         실행 흐름:
+         1️⃣ main() 실행 → new Car() 객체 생성
+         2️⃣ Thread 객체 t1 생성 (Car 객체를 Runnable로 전달)
+         3️⃣ t1.start() 호출 → JVM이 새로운 스레드를 만들어 run() 실행
+         4️⃣ Car.run() 내부의 System.out.println("message") 실행
+         */
+
+        // 결과:
+        // message
+    }
+}

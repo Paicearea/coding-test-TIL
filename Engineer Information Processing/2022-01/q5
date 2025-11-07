@@ -1,0 +1,30 @@
+#include <stdio.h>   // 표준 입출력 함수를 사용하기 위한 헤더 파일
+
+int main() {
+
+  int number = 1234;   // 뒤집을 대상 숫자 (예: 1234)
+  int div = 10;        // 나눗셈과 나머지 계산에 사용할 기준 값 (10진수 기준)
+  int result = 0;      // 결과값(뒤집힌 숫자)을 저장할 변수
+
+  // number가 0보다 큰 동안 반복 (모든 자릿수를 다 처리할 때까지)
+  while (number > 0) {            
+
+    // result를 10배 해서 자릿수를 한 칸 올림
+    // 예: result가 4라면 → result*10 = 40 → 다음 자리 숫자를 더할 준비
+    result = result * div;        
+
+    // number의 마지막 자릿수를 result에 더함
+    // 예: number가 1234라면 → number % 10 = 4 → result = 0 + 4 = 4
+    result = result + number % div; 
+
+    // number를 10으로 나누어 마지막 자리를 제거
+    // 예: number = 1234 / 10 = 123
+    number = number / div;        
+  }
+
+  // 모든 반복이 끝나면 result에는 뒤집힌 값이 들어 있음
+  // 예: 1234 → 4321
+  printf("%d", result);  
+
+  return 0;   // 프로그램 정상 종료
+}

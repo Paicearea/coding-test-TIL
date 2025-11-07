@@ -1,0 +1,46 @@
+// 한 파일 예시: Main.java
+public class Main {
+
+    // 원래 주신 Conv 클래스를 그대로 사용하되 문법만 보완
+    static class Conv {
+        int a;
+
+        public Conv(int a) {
+            this.a = a;                      // 생성 시 a 필드에 값 저장
+        }
+
+        int func() {
+            int b = 1;                       // (1) 초기값: b = 1
+            for (int i = 1; i < a; i++) {    // (2) i = 1 ~ a-1까지 반복
+                b = a * i + b;               // (3) 매 반복에서 b를 갱신
+
+                /*
+                 a는 아래 main에서 5로 바뀜(중요!)
+                 따라서 a = 5일 때, 반복 과정은 다음과 같음:
+
+                 초기 b = 1
+                 i = 1: b = 5*1 + 1  = 6
+                 i = 2: b = 5*2 + 6  = 16
+                 i = 3: b = 5*3 + 16 = 31
+                 i = 4: b = 5*4 + 31 = 51
+                 반복 종료 (i는 1,2,3,4까지만 돌고 i=5에서 종료)
+                */
+            }
+
+            // (4) 리턴은 a + b
+            //     위 과정 끝난 뒤 b = 51, a = 5 이므로 5 + 51 = 56
+            return a + b;                    // 반환값: 56
+        }
+    }
+
+    public static void main(String[] args) {
+        Conv obj = new Conv(3);              // 객체 생성 시 a = 3
+        obj.a = 5;                           // 곧바로 a를 5로 변경(핵심 포인트)
+
+        int b = obj.func();                  // func()의 반환값을 b에 담음
+                                             // 위에서 계산한 대로 b = 56
+
+        System.out.print(obj.a + b);         // 출력: obj.a(5) + b(56) = 61
+                                             // 최종 출력 결과: 61
+    }
+}

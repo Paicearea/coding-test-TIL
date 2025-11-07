@@ -1,0 +1,11 @@
+a = "REMEMBER NOVEMBER"
+
+# a[:3] → "REM"
+# a[12:16] → "EMBE"
+b = a[:3] + a[12:16]   # "REMEMBE"
+
+# "R AND %s" % "STR" → "R AND STR"
+c = "R AND %s" % "STR"
+
+# b + c = "REMEMBE" + "R AND STR" = "REMEMBER AND STR"
+print(b + c)   # ✅ 최종 출력: REMEMBER AND STR
