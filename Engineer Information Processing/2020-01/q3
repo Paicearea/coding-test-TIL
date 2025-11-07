@@ -1,0 +1,35 @@
+public class good {
+    public static void main(String[] args) {
+        int i = 3;    // switch 비교 대상
+        int k = 1;    // 계산용 변수
+
+        // 🔹 switch문 문법 고치기:
+        // 1) "swich" → "switch"
+        // 2) "case" 문에는 세미콜론(;) ❌ 콜론(:) ✅
+        // 3) System의 S는 대문자 ✅
+        switch (i) {
+            case 0:
+            case 1:
+            case 2:
+                // i가 0,1,2 중 하나면 여기로 오지만,
+                // i=3이므로 건너뜀
+                break;
+
+            case 3:
+                k = 0;          // i == 3 → k = 0
+                // break문이 없으므로 아래 case로 '연속 실행'(fall-through)
+            case 4:
+                k += 3;         // k = 0 + 3 = 3
+                // break문 없음 → 다음 case로 이동
+            case 5:
+                k -= 10;        // k = 3 - 10 = -7
+                // break문 없음 → default도 실행됨
+            default:
+                k--;            // k = -7 - 1 = -8
+        }
+
+        System.out.print(k);     // 최종 결과 출력
+    }
+}
+
+// 예상 출력: -8
