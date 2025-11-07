@@ -1,0 +1,24 @@
+class Parent {
+    public void show() {
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {
+    // 부모의 show() 메서드를 오버라이딩함
+    public void show() {
+        System.out.println("Child");
+    }
+}
+
+public class good {
+    public static void main(String[] args) {
+        // ✅ 업캐스팅: 부모 타입으로 자식 객체 참조
+        Parent pa = new Child();
+
+        // 호출된 메서드는 참조 변수 타입이 아니라 "실제 객체 타입" 기준으로 결정됨 (동적 바인딩)
+        pa.show();  // Child의 show()가 실행됨
+    }
+}
+
+// 예상 출력: Child

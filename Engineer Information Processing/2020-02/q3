@@ -1,0 +1,32 @@
+class A {
+    private int a;   // 멤버 변수 (private → A 클래스 안에서만 접근 가능)
+
+    // A 클래스의 생성자
+    public A(int a) {
+        this.a = a;  // 매개변수 a를 멤버변수 a에 저장
+    }
+
+    // A 클래스의 display() 메서드
+    public void display() {
+        System.out.println("a=" + a);
+    }
+}
+
+class B extends A {   // B는 A를 상속받음
+
+    // B 클래스의 생성자
+    public B(int a) {
+        super(a);          // 부모 클래스 A의 생성자 호출 → A(int a)
+                            // A의 생성자에서 this.a = 10 실행됨
+
+        super.display();    // 부모 클래스의 display() 호출 → "a=10" 출력
+    }
+}
+
+public class good {
+    public static void main(String[] args) {
+        // B 객체 생성 → B(int a) 실행
+        // 내부에서 super(a) → A(int a) → super.display() 순으로 실행됨
+        B obj = new B(10);  
+    }
+}
