@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+// ⚠️ 함수 선언(프로토타입)을 main 위에 미리 적는 것이 일반적인 올바른 형태입니다.
+int mp(int base, int exp);   // base^exp를 계산하는 함수 선언
+
+int main() {
+    int res;                 // 결과를 저장할 변수
+    res = mp(2, 10);         // mp 함수 호출 (2^10 계산)
+    printf("%d", res);       // 계산 결과 출력
+    return 0;                // 프로그램 정상 종료
+}
+
+// ✅ mp 함수 정의
+// base를 exp번 곱해서 결과를 반환하는 함수
+int mp(int base, int exp) {
+    int res = 1;             // 결과를 저장할 변수 (초기값 1로 설정)
+    
+    // i = 0부터 exp보다 작을 때까지 반복
+    // exp번 만큼 base를 곱함
+    for (int i = 0; i < exp; i++) {
+        res = res * base;    // 반복마다 base를 한 번씩 곱함
+        /*
+          각 반복 과정:
+          i=0 → res = 1 * 2 = 2
+          i=1 → res = 2 * 2 = 4
+          i=2 → res = 4 * 2 = 8
+          i=3 → res = 8 * 2 = 16
+          i=4 → res = 16 * 2 = 32
+          i=5 → res = 32 * 2 = 64
+          i=6 → res = 64 * 2 = 128
+          i=7 → res = 128 * 2 = 256
+          i=8 → res = 256 * 2 = 512
+          i=9 → res = 512 * 2 = 1024
+        */
+    }
+
+    return res;              // 최종적으로 2^10 = 1024 반환
+}

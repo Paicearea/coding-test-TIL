@@ -1,0 +1,18 @@
+public class Test {
+   public static void main(String[] args){
+      // ⚠️ System의 S는 반드시 대문자여야 함
+      // check 메서드를 클래스 이름(Test)으로 직접 호출함
+      // → 객체를 만들지 않고 호출하려면 check는 반드시 static이어야 함
+      System.out.print(Test.check(1));   // check(1)의 반환값을 출력
+   }
+   
+   // ✅ static 추가 이유:
+   // - main() 메서드는 static 영역에서 실행됨
+   // - main() 안에서 같은 클래스의 메서드를 부르려면,
+   //   그 메서드도 static이어야 객체 없이 접근 가능함
+   static String check(int num) {
+      // 삼항 연산자: 조건이 참이면 앞의 값, 거짓이면 뒤의 값 반환
+      // num이 0 이상이면 "positive", 그렇지 않으면 "negative"
+      return (num >= 0) ? "positive" : "negative";
+   }
+}
