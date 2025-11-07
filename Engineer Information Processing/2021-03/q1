@@ -1,0 +1,46 @@
+// ✅ Connection 클래스: 하나의 객체만 만들어 공유하도록 설계된 클래스 (싱글톤 패턴)
+class Connection {
+
+  // (1) 정적(Static) 변수 — 클래스 전체에서 단 하나만 존재함
+  private static Connection _inst = null;  
+
+  // (2) count 변수 — 몇 번 호출되었는지를 기록
+  private int count = 0;
+
+  // (3) get() 메서드 — Connection 객체를 반환 (없으면 새로 만들고, 있으면 기존 걸 돌려줌)
+  static public Connection get() {
+    if (_inst == null) {              // 아직 Connection 객체가 한 번도 만들어지지 않았다면
+      _inst = new Connection();       // 새 객체 생성
+      return _inst;                   // 새로 만든 객체 반환
+    }
+    return _inst;                     // 이미 만들어진 객체가 있다면 그걸 반환
+  }
+
+  // (4) count() — count 값을 1 증가시키는 메서드
+  public void count() { count++; }
+
+  // (5) getCount() — 현재 count 값 반환
+  public int getCount() { return count; }
+}
+
+
+// ✅ testcon 클래스: 프로그램 실행 시작점
+public class testcon {
+  public static void main(String[] args) {
+
+    // 첫 번째 get() 호출 시: _inst는 null이므로 새 Connection 객체가 만들어짐
+    Connection conn1 = Connection.get();
+    conn1.count();   // count = 1
+
+    // 두 번째 get() 호출 시: 이미 _inst가 존재하므로 같은 객체를 반환
+    Connection conn2 = Connection.get();
+    conn2.count();   // count = 2 (conn1과 conn2가 같은 객체!)
+
+    // 세 번째 get() 호출 시도: 역시 같은 객체 반환
+    Connection conn3 = Connection.get();
+    conn3.count();   // count = 3 (conn3도 동일한 객체)
+
+    // conn1, conn2, conn3는 모두 같은 객체를 가리킴
+    System.out.print(conn1.getCount()); // 3이 출력됨
+  }
+}

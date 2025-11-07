@@ -1,0 +1,49 @@
+public class testco {
+  public static void main(String[] args) {
+    int a = 3, b = 4, c = 3, d = 5;
+
+    // 바깥 if의 조건을 구성하는 세 부분을 각각 계산해보자.
+    // 1) (a == 2 | a == c)
+    //    - a == 2  → 3 == 2 → false
+    //    - a == c  → 3 == 3 → true
+    //    - '|'(단항 한 개짜리)는 논리 OR이지만 "단락 평가"를 하지 않음(양쪽 전부 평가)
+    //    - false | true → true
+    //
+    // 2) !(c > d)
+    //    - c > d  → 3 > 5 → false
+    //    - !(false) → true
+    //
+    // 3) (1 == b ^ c != d)
+    //    - 1 == b  → 1 == 4 → false
+    //    - c != d  → 3 != 5 → true
+    //    - '^'는 XOR(배타적 논리합) → false ^ true → true
+    //
+    // 바깥 조건 전체: (true) & (true) & (true) → true
+    // '&'도 단락 평가를 하지 않지만, 모두 true이므로 결과는 true
+
+    if ((a == 2 | a == c) & !(c > d) & (1 == b ^ c != d)) {
+      // 이 블록으로 들어온다.
+
+      a = b + c;          // a = 4 + 3 = 7
+
+      // 안쪽 if: (7 == b ^ c != a)
+      // - 7 == b → 7 == 4 → false
+      // - c != a → 3 != 7 → true
+      // - false ^ true → true
+      if (7 == b ^ c != a) {
+        System.out.println(a);  // a = 7 출력
+      } else {
+        System.out.println(b);
+      }
+
+    } else {
+      // (해당되지 않음: 바깥 조건이 이미 true였음)
+      a = c + d;
+      if (7 == c ^ d != a) {
+        System.out.println(a);
+      } else {
+        System.out.println(d);
+      }
+    }
+  }
+}
