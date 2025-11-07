@@ -1,0 +1,68 @@
+// ✅ 추상 클래스 이름은 관례상 대문자 시작이 좋고,
+//   아래에서 Car가 extends 하는 타입명과 일치해야 함.
+abstract class Vehicle {
+    private String name;                 // 차량 이름(캡슐화: private)
+
+    // 추상 메서드: Car가 반드시 구현해야 함(오버라이드 대상)
+    public abstract String getName(String val);
+
+    // 오버로드된 "매개변수 없는" getName()
+    // ✔ Car가 별도로 재정의(override)하지 않으면 이 구현이 그대로 사용됨
+    public String getName() {
+        return "vehicle name:" + name;   // ← 콜론 뒤에 공백이 없는 점에 주의
+    }
+
+    public void setName(String val) {    // 이름 설정자
+        name = val;
+    }
+}
+
+// ✅ Car는 Vehicle을 상속
+class Car extends Vehicle {
+
+    public Car(String val) {
+        // 생성 시 Vehicle의 name 필드에 값 저장
+        setName(val);
+    }
+
+    // ✔ 추상 메서드 구현(오버라이드): 매개변수로 받은 값을 그대로 사용
+    @Override
+    public String getName(String val) {
+        return "Car name : " + val;
+    }
+
+    // ✔ 오버로드(다른 시그니처): byte[] 버전
+    //   (이 메서드는 이번 실행 경로에서는 호출되지 않음)
+    public String getName(byte[] val) {
+        return "Car name : " + val;  // byte[]를 그대로 더하면 참조 문자열이 출력됨
+    }
+
+    // ※ 주의: '매개변수 없는 getName()'은 재정의하지 않았으므로
+    //   Vehicle에 있는 getName()이 그대로 상속되어 사용됩니다.
+}
+
+public class good {
+    public static void main(String[] args) {     // ✅ 'static' 소문자, 시그니처 정확히
+        Vehicle obj = new Car("Spark");          // 업캐스팅: 참조 타입은 Vehicle, 실제 객체는 Car
+
+        // 호출 분해:
+        // 1) obj.getName();  → "매개변수 없는" 메서드 호출
+        // 2) Car에는 매개변수 없는 getName()이 '없음'
+        // 3) 따라서 상위 클래스 Vehicle의 getName()이 호출됨 (동적 바인딩 규칙에 의해 실제 타입 탐색, 없으면 상위로)
+        // 4) Vehicle.getName()은 내부 name 필드를 사용 → 생성자에서 setName("Spark")로 설정해둠
+        // 5) 최종 반환 문자열: "vehicle name:" + "Spark"  → "vehicle name:Spark"
+        System.out.print(obj.getName());         // ✅ 최종 출력
+    }
+}
+
+/*
+[최종 출력 결과]
+vehicle name:Spark
+
+[왜 이렇게 되나?]
+- Car는 getName(String)과 getName(byte[])를 "오버로드/오버라이드"했지만,
+  "매개변수 없는 getName()"은 오버라이드하지 않았습니다.
+- 따라서 obj.getName() 호출 시, Vehicle의 무인자 getName()이 실행됩니다.
+- Car 생성자에서 setName("Spark")가 이미 호출되어 Vehicle의 private name이 "Spark"로 설정되어 있으므로,
+  Vehicle.getName()은 "vehicle name:Spark"를 반환합니다.
+*/
